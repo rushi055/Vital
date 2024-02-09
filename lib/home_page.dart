@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rushikesh/donor_detail_form.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,25 +19,41 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/6.jpg'), // Replace with your image asset path
+            image: AssetImage('assets/6.jpg'),
             fit: BoxFit.cover,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              DonorCard(),
-              SizedBox(height: 16.0), // Add some space between cards
-              ReceiverCard(),
-            ],
-          ),
+        child: Stack(
+          children: [
+            Container(
+              color: Color(0xEE1F27).withOpacity(0.85),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  DonorCard(),
+                  SizedBox(height: 1.0),
+                  Container(
+                    height: 300,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/7.jpg'),
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 1.0),
+                  ReceiverCard(),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -53,24 +70,42 @@ class DonorCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Donor',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
+            Center(
+              child: Text(
+                'Donor',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             SizedBox(height: 8.0),
             Text(
-              'Find information about becoming a blood donor.',
+              'Find information about who can become a blood donor.',
               style: TextStyle(fontSize: 16.0),
             ),
             SizedBox(height: 8.0),
-            ElevatedButton(
-              onPressed: () {
-                // Add navigation or other actions for the donor card
-              },
-              child: Text('Learn More'),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DonorDetailsPage()),
+                    );
+                  },
+                  child: Text('Apply'),
+                ),
+                SizedBox(
+                  width: 120,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Add navigation or other actions for the donor card
+                  },
+                  child: Text('Learn More'),
+                ),
+              ],
             ),
           ],
         ),
@@ -89,11 +124,13 @@ class ReceiverCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Receiver',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
+            Center(
+              child: Text(
+                'Receiver',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             SizedBox(height: 8.0),
@@ -102,11 +139,24 @@ class ReceiverCard extends StatelessWidget {
               style: TextStyle(fontSize: 16.0),
             ),
             SizedBox(height: 8.0),
-            ElevatedButton(
-              onPressed: () {
-                // Add navigation or other actions for the receiver card
-              },
-              child: Text('Request Blood'),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Add navigation or other actions for the receiver card
+                  },
+                  child: Text('Request Blood'),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Add navigation or other actions for the receiver card
+                  },
+                  child: Text('Learn More'),
+                ),
+              ],
             ),
           ],
         ),
