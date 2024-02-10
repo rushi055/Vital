@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rushikesh/routes.dart';
+import 'package:rushikesh/utils/routes.dart';
 
 class LoginPage extends StatefulWidget {
   @override
