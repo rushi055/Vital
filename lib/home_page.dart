@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rushikesh/doner_guide.dart';
 import 'package:rushikesh/donor_detail_form.dart';
+import 'package:rushikesh/preregistration.dart';
+import 'package:rushikesh/receiver_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,6 +22,66 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Blood Donation App'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Blood Donation App',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24.0,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Pre-Registration'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PreRegistrationForm()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Donors Info'),
+              onTap: () {
+                // Navigate to the information for donors page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BloodDonationDonerPage()),
+                );// Close the drawer
+                // Add navigation or other actions
+              },
+            ),
+            ListTile(
+              title: Text('Receivers Info'),
+              onTap: () {
+                // Navigate to the information for receivers page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BloodDonationReceiverPage()),
+                );// Close the drawer
+                // Add navigation or other actions
+              },
+            ),
+            ListTile(
+              title: Text('Blood Bank Centers'),
+              onTap: () {
+                // Navigate to the nearest blood bank center page
+                Navigator.pop(context); // Close the drawer
+                // Add navigation or other actions
+              },
+            ),
+          ],
+        ),
+      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -29,7 +92,7 @@ class HomePage extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              color: Color(0xEE1F27).withOpacity(0.85),
+              color: Color(0xEE1F27)
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -43,7 +106,7 @@ class HomePage extends StatelessWidget {
                     height: 300,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/7.jpg'),
+                        image: AssetImage('assets/8.jpg'),
                         fit: BoxFit.fitWidth,
                       ),
                     ),
@@ -96,15 +159,15 @@ class DonorCard extends StatelessWidget {
                   },
                   child: Text('Apply'),
                 ),
-                SizedBox(
-                  width: 120,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Add navigation or other actions for the donor card
-                  },
-                  child: Text('Learn More'),
-                ),
+                // SizedBox(
+                //   width: 120,
+                // ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     // Add navigation or other actions for the donor card
+                //   },
+                //   child: Text('Learn More'),
+                //),
               ],
             ),
           ],
@@ -147,15 +210,7 @@ class ReceiverCard extends StatelessWidget {
                   },
                   child: Text('Request Blood'),
                 ),
-                SizedBox(
-                  width: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Add navigation or other actions for the receiver card
-                  },
-                  child: Text('Learn More'),
-                ),
+
               ],
             ),
           ],
