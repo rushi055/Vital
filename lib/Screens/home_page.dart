@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rushikesh/Screens/pdf.dart';
 import 'package:rushikesh/cards/doner_card.dart';
 import 'package:rushikesh/Screens/doner_guide.dart';
 import 'package:rushikesh/Forms/preregistration.dart';
@@ -50,20 +51,15 @@ class _HomePageState extends State<HomePage> {
     _image = File(''); // Initial empty image
   }
 
-  void _openPDF() {
-    String pdfsPath = "assets/hospital.pdf";
-    try {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PdfViewerPage(pdfPath: pdfsPath),
-        ),
-      );
-    } catch (error) {
-      print('Error opening PDF: $error');
-      // Display a user-friendly error message or handle it appropriately
-    }
-  }
+  // void _openPDF() {
+  //   String pdfPath = "assets/hospital.pdf";
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => PdfViewerPage(pdfPath: pdfPath),
+  //     ),
+  //   );
+  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,7 +137,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.location_on_outlined),
               title: Text('Blood Bank Centers'),
               onTap: () {
-                _openPDF();
+                // _openPDF();
               },
             ),
           ],
@@ -185,21 +181,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-class PdfViewerPage extends StatelessWidget {
-   String pdfPath;
-
-  PdfViewerPage({required this.pdfPath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Blood Bank Centers'),
-      ),
-      body: PDFView(
-        filePath: pdfPath,
-
-      ),
-    );
-  }
-}
+// class PdfViewerPage extends StatelessWidget {
+//    String pdfPath;
+//
+//   PdfViewerPage({required this.pdfPath});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Blood Bank Centers'),
+//       ),
+//       body: PDFView(
+//         filePath: pdfPath,
+//
+//       ),
+//     );
+//   }
+// }
