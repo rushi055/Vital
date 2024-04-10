@@ -51,6 +51,7 @@ class _DonorDetailsPageState extends State<DonorDetailsPage> {
                     return 'Please enter your blood group';
                   }
                   return null;
+
                 },
               ),
               SizedBox(height: 16.0),
@@ -98,18 +99,18 @@ class _DonorDetailsPageState extends State<DonorDetailsPage> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    // Perform actions with the entered details
-                    // After saving, you can navigate to another page or perform other actions
-                    // For now, let's print the values to the console
-                    print('Blood Group: ${bloodGroupController.text}');
-                    print('Phone Number: ${phoneNumberController.text}');
-                    print('Location: ${locationController.text}');
-                    print('Existing Medical Conditions: ${medicalConditionsController.text}');
-                    print('Donation History: ${donationHistoryController.text}');
-                    print('Emergency Contact: ${emergencyContactController.text}');
-                    print('Preferred Time for Donation: ${preferredTimeController.text}');
-                  }
+                  // if (_formKey.currentState?.validate() ?? false) {
+                  //   // Perform actions with the entered details
+                  //   // After saving, you can navigate to another page or perform other actions
+                  //   // For now, let's print the values to the console
+                  //   print('Blood Group: ${bloodGroupController.text}');
+                  //   print('Phone Number: ${phoneNumberController.text}');
+                  //   print('Location: ${locationController.text}');
+                  //   print('Existing Medical Conditions: ${medicalConditionsController.text}');
+                  //   print('Donation History: ${donationHistoryController.text}');
+                  //   print('Emergency Contact: ${emergencyContactController.text}');
+                  //   print('Preferred Time for Donation: ${preferredTimeController.text}');
+                  // }
                 },
                 child: Text('Submit'),
               ),

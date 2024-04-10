@@ -48,10 +48,14 @@ class _MyFormState extends State<MyForm> {
     );
     if (picked != null && picked != DateTime.now()) {
       setState(() {
-        _dobController.text = picked.toLocal().toString().split(' ')[0]; // Display only the date part
+        _dobController.text = picked
+            .toLocal()
+            .toString()
+            .split(' ')[0]; // Display only the date part
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +69,16 @@ class _MyFormState extends State<MyForm> {
           child: ListView(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Full Name'),
+                decoration: InputDecoration(
+                  labelText: 'Full Name',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.blue,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
                 onChanged: (value) {
                   setState(() {
                     fullName = value;
@@ -78,9 +91,18 @@ class _MyFormState extends State<MyForm> {
                   return null;
                 },
               ),
+              SizedBox(height: 10.0),
               TextFormField(
                 controller: _dobController,
                 decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    gapPadding: 4,
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.blue,
+                      width: 2.0,
+                    ),
+                  ),
                   labelText: 'Date of Birth',
                   suffixIcon: IconButton(
                     icon: Icon(Icons.calendar_today),
@@ -98,83 +120,81 @@ class _MyFormState extends State<MyForm> {
                   return null;
                 },
               ),
+              SizedBox(height: 10.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Medical Record Number'),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      gapPadding: 4,
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.blue,
+                        width: 2.0,
+                      ),
+                    ),
+                    labelText: 'Medical Record Number'),
                 onChanged: (value) {
                   setState(() {
                     medicalRecordNumber = value;
                   });
                 },
               ),
+              SizedBox(height: 10.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Blood Type'),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      gapPadding: 4,
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.blue,
+                        width: 2.0,
+                      ),
+                    ),
+                    labelText: 'Blood Type'),
                 onChanged: (value) {
                   setState(() {
                     bloodType = value;
                   });
                 },
               ),
-
+              SizedBox(height: 10.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Reason for Transfusion'),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      gapPadding: 4,
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.blue,
+                        width: 2.0,
+                      ),
+                    ),
+                    labelText: 'Reason for Transfusion'),
                 onChanged: (value) {
                   setState(() {
                     transfusionReason = value;
                   });
                 },
               ),
+              SizedBox(height: 10.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Special Requirements'),
-                onChanged: (value) {
-                  setState(() {
-                    specialRequirements = value;
-                  });
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Crossmatch Result'),
-                onChanged: (value) {
-                  setState(() {
-                    crossmatchResult = value;
-                  });
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Donor Preferences'),
-                onChanged: (value) {
-                  setState(() {
-                    donorPreferences = value;
-                  });
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Allergies'),
-                onChanged: (value) {
-                  setState(() {
-                    allergies = value;
-                  });
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Physician Name'),
-                onChanged: (value) {
-                  setState(() {
-                    physicianName = value;
-                  });
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Contact Number'),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      gapPadding: 4,
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.blue,
+                        width: 2.0,
+                      ),
+                    ),
+                    labelText: 'Contact Number'),
                 onChanged: (value) {
                   setState(() {
                     contactNumber = value;
                   });
                 },
               ),
-
               SizedBox(height: 16),
-
               ElevatedButton(
+                style:ElevatedButton.styleFrom(backgroundColor: Colors.purple),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Process the form data
@@ -182,7 +202,7 @@ class _MyFormState extends State<MyForm> {
                     print('Form submitted');
                   }
                 },
-                child: Text('Submit'),
+                child: Text('Submit',style: TextStyle(color: Colors.white,fontSize: 20),),
               ),
             ],
           ),

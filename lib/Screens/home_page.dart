@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rushikesh/Screens/pdf.dart';
-import 'package:rushikesh/cards/doner_card.dart';
+import 'package:rushikesh/Forms/receiver_form.dart';
 import 'package:rushikesh/Screens/doner_guide.dart';
 import 'package:rushikesh/Forms/preregistration.dart';
 import 'package:rushikesh/cards/receiver_card.dart';
 import 'package:rushikesh/Screens/receiver_page.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:rushikesh/Forms/donor_detail_form.dart';
+import 'package:rushikesh/models/mysql.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,174 +26,251 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  @override
-  late File _image = File('assets/7.jpg');
-
-  String _profileName = "Rushikesh Chaudhari"; // Initial profile name
-
-  Future<void> _pickImageFromGallery() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
-  }
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  late AnimationController _scaleController;
+  late Animation<double> _scaleAnimation;
+  var db = new Mysql();
 
   @override
   void initState() {
     super.initState();
-    _image = File(''); // Initial empty image
+    _scaleController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    )..addListener(() {
+      setState(() {});
+    });
+    _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: _scaleController, curve: Curves.easeOutBack));
   }
 
-  // void _openPDF() {
-  //   String pdfPath = "assets/hospital.pdf";
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => PdfViewerPage(pdfPath: pdfPath),
-  //     ),
-  //   );
-  // }
 
+
+  @override
   Widget build(BuildContext context) {
+    _scaleController.forward();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Blood Donation App'),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.redAccent,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: _pickImageFromGallery,
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: _image != null && _image.path.isNotEmpty
-                          ? FileImage(_image) as ImageProvider<Object>
-                          : AssetImage('assets/7.jpg'),
-                    ),
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+
+             Image.asset(
+              'assets/6.jpg',
+              fit: BoxFit.cover,
+            ),
+
+          Center(
+            child: Transform.scale(
+              scale: _scaleAnimation.value,
+              child: Container(
+
+                height: 300,
+                width: 300,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      Colors.red[800]!,
+                      Colors.red[900]!,
+                    ],
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    _profileName,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
+
+                ),
               ),
             ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Pre-Registration'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PreRegistrationForm()),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.people_alt_outlined),
-              title: Text('Donors Info'),
-              onTap: () {
-                // Navigate to the information for donors page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BloodDonationDonerPage()),
-                ); // Close the drawer
-                // Add navigation or other actions
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.people_alt),
-              title: Text('Receivers Info'),
-              onTap: () {
-                // Navigate to the information for receivers page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BloodDonationReceiverPage()),
-                ); // Close the drawer
-                // Add navigation or other actions
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.location_on_outlined),
-              title: Text('Blood Bank Centers'),
-              onTap: () {
-                // _openPDF();
-              },
-            ),
-          ],
-        ),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/6.jpg'),
-            fit: BoxFit.cover,
           ),
-        ),
-        child: Stack(
-          children: [
-            Container(color: Color(0xEE1F27)),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  DonorCard(),
-                  SizedBox(height: 1.0),
-                  Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/10.jpg'),
-                        fit: BoxFit.fitWidth,
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.8,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 16),
+                      Text(
+                        'Welcome to BloodLink',
+                        style: TextStyle(
+                          fontSize: 31,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red[900],
+                        ),
                       ),
-                    ),
+                      SizedBox(height: 32),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Navigate to the donor form
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DonorDetailsPage(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red[900],
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: Text(
+                            'Donor Form',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Navigate to the receiver form
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyForm(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red[900],
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: Text(
+                            'Receiver Form',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 4,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.person,
+                            color: Colors.red[900],
+                          ),
+                          title: Text(
+                            'Pre-Registration',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.red[900],
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PreRegistrationForm(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 4,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.people_alt_outlined,
+                            color: Colors.red[900],
+                          ),
+                          title: Text(
+                            'Donors Info',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.red[900],
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BloodDonationDonerPage(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 4,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.people_alt_outlined,
+                            color: Colors.red[900],
+                          ),
+                          title: Text(
+                            'Receiver Info',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.red[900],
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BloodDonationReceiverPage(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 1.0),
-                  ReceiverCard(),
-                ],
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
-// class PdfViewerPage extends StatelessWidget {
-//    String pdfPath;
-//
-//   PdfViewerPage({required this.pdfPath});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Blood Bank Centers'),
-//       ),
-//       body: PDFView(
-//         filePath: pdfPath,
-//
-//       ),
-//     );
-//   }
-// }

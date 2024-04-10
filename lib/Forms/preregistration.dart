@@ -78,7 +78,7 @@ class _PreRegistrationFormState extends State<PreRegistrationForm> {
                 SizedBox(height: 32.0),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red.shade300,
+                    backgroundColor: Colors.red.shade300,
                   ),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
